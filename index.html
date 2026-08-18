@@ -309,29 +309,54 @@
   a{ outline-color: var(--cyan); }
   a:focus-visible, button:focus-visible{ outline: 2px solid var(--cyan); outline-offset:3px; }
 
-  /* ===================== NAV HUD ===================== */
-  .navhud{
-    position: fixed; bottom: 14px; left:50%; transform: translateX(-50%);
-    display:flex; gap:4px;
-    background: rgba(5,8,20,0.75);
+  /* ===================== NAV MENU (dot menu) ===================== */
+  #navMenu{ position: relative; }
+  #navMenuBtn{
+    font-family: var(--head-font);
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    background: rgba(5,8,20,0.6);
+    border: 1px solid var(--panel-border);
+    backdrop-filter: blur(6px);
+    padding: 8px 12px;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  #navMenuBtn:hover, #navMenuBtn.active{ color: var(--cyan-soft); border-color: var(--cyan); }
+  #navMenuPanel{
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 190px;
+    background: rgba(5,8,20,0.9);
     border: 1px solid var(--panel-border);
     backdrop-filter: blur(8px);
-    padding: 6px;
-    z-index: 100;
-    max-width: 96vw;
-    overflow-x:auto;
+    padding: 8px;
+    display:flex;
+    flex-direction: column;
+    gap: 2px;
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
   }
-  .navhud a{
+  #navMenuPanel.show{
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  #navMenuPanel a{
     font-family: var(--head-font);
-    font-size: 10px;
-    letter-spacing: 0.5px;
+    font-size: 11px;
+    letter-spacing: 0.8px;
     color: var(--text-dim);
     text-decoration:none;
     padding: 9px 12px;
-    white-space:nowrap;
     border: 1px solid transparent;
   }
-  .navhud a:hover{ color: var(--cyan-soft); border-color: var(--panel-border); }
+  #navMenuPanel a:hover{ color: var(--cyan-soft); border-color: var(--panel-border); background: rgba(0,229,255,0.06); }
 
   /* ===================== SKELETON LOADER ===================== */
   #skeleton{
@@ -642,11 +667,16 @@
   #sysclock .lbl{ color: var(--text-dim); margin-right:6px; }
   @media (max-width:560px){ #sysclock{ display:none; } }
 
-  /* ===================== LANGUAGE TOGGLE ===================== */
-  #langToggle{
+  /* ===================== LANGUAGE TOGGLE + NAV MENU ===================== */
+  #topRightHud{
     position: fixed;
     top: 14px; right: 14px;
     z-index: 90;
+    display:flex;
+    gap: 8px;
+    align-items:flex-start;
+  }
+  #langToggle{
     display:flex;
     background: rgba(5,8,20,0.6);
     border: 1px solid var(--panel-border);
@@ -847,9 +877,23 @@
 <canvas id="particles"></canvas>
 <div id="transitionFlash"></div>
 <div id="sysclock"><span class="lbl">LOCAL TIME //</span><span id="clockText">--:--:--</span></div>
-<div id="langToggle">
-  <button data-lang="id" class="active">ID</button>
-  <button data-lang="en">EN</button>
+<div id="topRightHud">
+  <div id="navMenu">
+    <button id="navMenuBtn" aria-label="Menu navigasi" aria-expanded="false">⋯</button>
+    <div id="navMenuPanel">
+      <a href="#about">Profile</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#projects">Projects</a>
+      <a href="#certifications">Certification</a>
+      <a href="#contact">Connect</a>
+    </div>
+  </div>
+  <div id="langToggle">
+    <button data-lang="id" class="active">ID</button>
+    <button data-lang="en">EN</button>
+  </div>
 </div>
 <button id="toTop" aria-label="Kembali ke atas">↑</button>
 <div id="scrollbar"></div>
@@ -890,8 +934,8 @@
   <section class="reveal" id="about">
     <div class="section-title"><span class="idx">01</span> <span class="type-loop" data-text="USER PROFILE"></span><span class="cursor-blink"></span></div>
     <div class="panel">
-      <p class="desc i18n" data-id="Lulusan baru Sarjana Informatika yang memiliki semangat tinggi untuk belajar dan berkembang secara profesional. Memiliki kemampuan analisis, pemecahan masalah, dan komunikasi yang kuat, serta mampu beradaptasi dengan cepat di lingkungan baru. Berpengalaman dalam proyek akademik yang melibatkan teknologi, pengolahan data, dan aplikasi perangkat lunak. Pribadi yang bertanggung jawab, disiplin, dan kolaboratif, serta mampu bekerja dengan baik secara mandiri maupun dalam tim. Terbuka terhadap peluang magang dan posisi tingkat awal di berbagai bidang untuk memperoleh pengalaman berharga serta berkontribusi pada kesuksesan organisasi." data-en="Fresh graduate with a Bachelor's degree in Informatics, eager to learn and grow professionally. Strong analytical, problem-solving, and communication skills, with the ability to adapt quickly to new environments. Experienced in academic projects involving technology, data processing, and software applications. A responsible, disciplined, and collaborative individual who works well both independently and in a team. Open to internship and entry-level opportunities across various fields to gain valuable experience and contribute to organizational success.">
-        Lulusan baru Sarjana Informatika yang memiliki semangat tinggi untuk belajar dan berkembang
+      <p class="desc i18n" data-id="Lulusan baru Sarjana Komputer yang memiliki semangat tinggi untuk belajar dan berkembang secara profesional. Memiliki kemampuan analisis, pemecahan masalah, dan komunikasi yang kuat, serta mampu beradaptasi dengan cepat di lingkungan baru. Berpengalaman dalam proyek akademik yang melibatkan teknologi, pengolahan data, dan aplikasi perangkat lunak. Pribadi yang bertanggung jawab, disiplin, dan kolaboratif, serta mampu bekerja dengan baik secara mandiri maupun dalam tim. Terbuka terhadap peluang magang dan posisi tingkat awal di berbagai bidang untuk memperoleh pengalaman berharga serta berkontribusi pada kesuksesan organisasi." data-en="Fresh graduate with a Bachelor's degree in Informatics, eager to learn and grow professionally. Strong analytical, problem-solving, and communication skills, with the ability to adapt quickly to new environments. Experienced in academic projects involving technology, data processing, and software applications. A responsible, disciplined, and collaborative individual who works well both independently and in a team. Open to internship and entry-level opportunities across various fields to gain valuable experience and contribute to organizational success.">
+        Lulusan baru Sarjana Komputer yang memiliki semangat tinggi untuk belajar dan berkembang
         secara profesional. Memiliki kemampuan analisis, pemecahan masalah, dan komunikasi yang kuat,
         serta mampu beradaptasi dengan cepat di lingkungan baru. Berpengalaman dalam proyek akademik
         yang melibatkan teknologi, pengolahan data, dan aplikasi perangkat lunak. Pribadi yang
@@ -1057,17 +1101,33 @@
   </div>
 </div>
 
-<nav class="navhud" aria-label="Navigasi cepat">
-  <a href="#about">PROFILE</a>
-  <a href="#skills">SKILLS</a>
-  <a href="#experience">EXPERIENCE</a>
-  <a href="#education">EDUCATION</a>
-  <a href="#projects">PROJECTS</a>
-  <a href="#certifications">CERTIFICATION</a>
-  <a href="#contact">CONNECT</a>
-</nav>
-
 <script>
+/* ============ NAV MENU (dot menu) ============ */
+(function(){
+  var btn = document.getElementById('navMenuBtn');
+  var panel = document.getElementById('navMenuPanel');
+  if(!btn || !panel) return;
+  function close(){
+    panel.classList.remove('show');
+    btn.classList.remove('active');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var willShow = !panel.classList.contains('show');
+    panel.classList.toggle('show', willShow);
+    btn.classList.toggle('active', willShow);
+    btn.setAttribute('aria-expanded', willShow ? 'true' : 'false');
+  });
+  panel.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', close);
+  });
+  document.addEventListener('click', function(e){
+    if(!panel.contains(e.target) && e.target !== btn){ close(); }
+  });
+  window.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+})();
+
 /* ============ LANGUAGE TOGGLE ============ */
 (function(){
   var toggle = document.getElementById('langToggle');
