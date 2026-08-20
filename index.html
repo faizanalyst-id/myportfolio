@@ -274,6 +274,23 @@
     background: rgba(61,255,176,0.05);
   }
   .cred .icon{ color: var(--ok); font-family: var(--head-font); font-size: 12px; }
+
+  /* certificates enter one by one when the section reaches the viewport */
+  .cred-list.cert-stagger-ready .cred{
+    opacity:0;
+    transform:translateX(-22px) scale(0.98);
+  }
+  .cred-list.cert-stagger-ready.cert-stagger-in .cred{
+    opacity:1;
+    transform:translateX(0) scale(1);
+    transition:opacity 0.55s ease, transform 0.55s cubic-bezier(.2,.8,.2,1), border-color 0.2s ease, background 0.2s ease;
+  }
+  .cred-list.cert-stagger-ready.cert-stagger-in .cred:nth-child(2){ transition-delay:0.10s; }
+  .cred-list.cert-stagger-ready.cert-stagger-in .cred:nth-child(3){ transition-delay:0.20s; }
+  .cred-list.cert-stagger-ready.cert-stagger-in .cred:nth-child(4){ transition-delay:0.30s; }
+  .cred-list.cert-stagger-ready.cert-stagger-in .cred:nth-child(5){ transition-delay:0.40s; }
+  .cred-list.cert-stagger-ready.cert-stagger-in .cred:nth-child(6){ transition-delay:0.50s; }
+  .cred-list.cert-stagger-ready.cert-stagger-in .cred:nth-child(7){ transition-delay:0.60s; }
   .cred .txt{ font-size: 15.5px; color: var(--text); }
 
   /* ===================== CONTACT ===================== */
@@ -444,7 +461,7 @@
     width: 0%;
     background: linear-gradient(90deg, var(--cyan), var(--purple));
     box-shadow: 0 0 12px var(--cyan);
-    animation: fillbar 5s ease forwards;
+    animation: fillbar 3s linear forwards;
   }
   @keyframes fillbar{ to{ width:100%; } }
   .boot .status{
@@ -525,6 +542,122 @@
   .reveal.in{
     opacity: 1;
     transform: translateY(0);
+  }
+
+  /* ===================== STAGGERED SKILL MODULES ===================== */
+  .modules.stagger-ready .module{
+    opacity:0;
+    transform: translateY(18px) scale(0.97);
+  }
+  .modules.stagger-ready.stagger-in .module{
+    opacity:1;
+    transform: translateY(0) scale(1);
+    transition: opacity 0.55s ease, transform 0.55s cubic-bezier(.2,.8,.2,1), border-color 0.2s ease;
+  }
+  .modules.stagger-ready.stagger-in .module:nth-child(2){ transition-delay:0.08s; }
+  .modules.stagger-ready.stagger-in .module:nth-child(3){ transition-delay:0.16s; }
+  .modules.stagger-ready.stagger-in .module:nth-child(4){ transition-delay:0.24s; }
+  .modules.stagger-ready.stagger-in .module:nth-child(5){ transition-delay:0.32s; }
+  .modules.stagger-ready.stagger-in .module:nth-child(6){ transition-delay:0.40s; }
+
+  /* ===================== SCROLL-DRAWN EXPERIENCE TIMELINE ===================== */
+  #experience .experience-track{
+    --timeline-progress: 0%;
+    position:relative;
+    padding-left:34px;
+  }
+  #experience .experience-track::before,
+  #experience .experience-track::after{
+    content:"";
+    position:absolute;
+    left:14px;
+    top:24px;
+    width:2px;
+    border-radius:2px;
+  }
+  #experience .experience-track::before{
+    bottom:24px;
+    background:rgba(0,229,255,0.14);
+  }
+  #experience .experience-track::after{
+    height:var(--timeline-progress);
+    max-height:calc(100% - 48px);
+    background:linear-gradient(to bottom, var(--cyan), var(--purple), var(--magenta));
+    box-shadow:0 0 12px rgba(0,229,255,0.7);
+  }
+  #experience .experience-track .log::before{
+    content:"";
+    position:absolute;
+    left:-27px;
+    top:25px;
+    width:11px;
+    height:11px;
+    border-radius:50%;
+    background:var(--bg-deep);
+    border:2px solid var(--cyan);
+    box-shadow:0 0 0 4px rgba(0,229,255,0.08), 0 0 12px var(--cyan);
+    z-index:2;
+  }
+  #experience .experience-track .log.timeline-active::before{
+    background:var(--cyan);
+    animation:pulse 1.6s ease infinite;
+  }
+
+  /* ===================== SCROLL-DRAWN PROJECT TIMELINE ===================== */
+  #projects .project-track{
+    --project-progress:0%;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    padding-left:34px;
+  }
+  #projects .project-track::before,
+  #projects .project-track::after{
+    content:"";
+    position:absolute;
+    left:14px;
+    top:24px;
+    width:2px;
+    border-radius:2px;
+  }
+  #projects .project-track::before{
+    bottom:24px;
+    background:rgba(0,229,255,0.14);
+  }
+  #projects .project-track::after{
+    height:var(--project-progress);
+    max-height:calc(100% - 48px);
+    background:linear-gradient(to bottom, var(--cyan), var(--purple), var(--magenta));
+    box-shadow:0 0 12px rgba(0,229,255,0.7);
+  }
+  #projects .project-log{
+    margin:0;
+  }
+  #projects .project-log::before{
+    content:"";
+    position:absolute;
+    left:-27px;
+    top:25px;
+    width:11px;
+    height:11px;
+    border-radius:50%;
+    background:var(--bg-deep);
+    border:2px solid var(--cyan);
+    box-shadow:0 0 0 4px rgba(0,229,255,0.08), 0 0 12px var(--cyan);
+    z-index:2;
+  }
+  #projects .project-log.timeline-active::before{
+    background:var(--cyan);
+    animation:pulse 1.6s ease infinite;
+  }
+
+  /* active section indicator in the HUD navigation */
+  #navMenuPanel a.active{
+    color:#041018;
+    border-color:var(--cyan);
+    background:linear-gradient(90deg, var(--cyan), var(--cyan-soft));
+    box-shadow:0 0 14px rgba(0,229,255,0.25);
   }
 
   /* ===================== TILT CARDS ===================== */
@@ -870,6 +1003,179 @@
     cursor:pointer;
   }
   .modal-close:hover{ border-color: var(--cyan); }
+
+  /* ===================== PROJECT QUICK PREVIEW ===================== */
+  .project-preview-btn{
+    margin-left:8px;
+    font-size:10px;
+    padding:11px 16px;
+  }
+  #projectModal{
+    position:fixed;
+    inset:0;
+    z-index:610;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    background:rgba(2,3,10,0.88);
+    backdrop-filter:blur(8px);
+  }
+  #projectModal.show{ display:flex; }
+  .project-modal-box{
+    width:min(820px, 100%);
+    max-height:88vh;
+    overflow:auto;
+    position:relative;
+    padding:24px;
+    background:rgba(8,12,28,0.96);
+    border:1px solid var(--panel-border);
+    box-shadow:0 0 50px rgba(0,229,255,0.13);
+  }
+  .project-modal-box.animate-in{
+    animation:projectReveal 0.48s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .project-modal-box.animate-in::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    height:2px;
+    pointer-events:none;
+    background:linear-gradient(90deg, transparent, var(--cyan), #fff, var(--purple), transparent);
+    animation:projectScan 0.7s ease-out both;
+  }
+  @keyframes projectReveal{
+    0%{ opacity:0; transform:scale(0.94) translateY(18px); clip-path:inset(45% 0 45% 0); }
+    55%{ opacity:1; clip-path:inset(0 0 0 0); }
+    100%{ opacity:1; transform:scale(1) translateY(0); clip-path:inset(0 0 0 0); }
+  }
+  @keyframes projectScan{
+    0%{ top:0; opacity:1; }
+    100%{ top:100%; opacity:0; }
+  }
+  .project-modal-head{
+    padding-right:44px;
+    margin-bottom:16px;
+  }
+  .project-modal-kicker{
+    color:var(--ok);
+    font:10px var(--head-font);
+    letter-spacing:1.5px;
+    margin-bottom:8px;
+  }
+  .project-modal-head h3{
+    color:#fff;
+    font-size:clamp(15px, 3vw, 20px);
+    letter-spacing:0.5px;
+  }
+  .project-preview-screen{
+    position:relative;
+    min-height:330px;
+    overflow:hidden;
+    border:1px solid var(--panel-border);
+    background:#050711;
+  }
+  .project-preview-screen::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    opacity:0.22;
+    background:repeating-linear-gradient(to bottom, transparent 0 3px, rgba(0,229,255,0.09) 4px);
+  }
+  .project-preview-screen iframe{
+    width:100%;
+    height:430px;
+    display:block;
+    border:0;
+    background:#fff;
+  }
+  .cluster-preview{
+    position:relative;
+    min-height:330px;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    align-items:end;
+    gap:20px;
+    padding:48px 34px 34px;
+    background:
+      linear-gradient(rgba(0,229,255,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.08) 1px, transparent 1px),
+      radial-gradient(circle at 50% 0%, rgba(162,89,255,0.18), transparent 60%);
+    background-size:32px 32px, 32px 32px, auto;
+  }
+  .cluster-score{
+    position:absolute;
+    top:14px;
+    left:50%;
+    transform:translateX(-50%);
+    width:max-content;
+    max-width:calc(100% - 24px);
+    padding:7px 12px;
+    color:var(--ok);
+    background:rgba(61,255,176,0.08);
+    border:1px solid rgba(61,255,176,0.45);
+    font:10px var(--head-font);
+    letter-spacing:1px;
+    text-align:center;
+  }
+  .cluster-column{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-end;
+    gap:10px;
+    height:240px;
+  }
+  .cluster-column .value{
+    color:#fff;
+    font:12px var(--head-font);
+  }
+  .cluster-column .bar{
+    width:min(72px, 70%);
+    height:var(--bar-height);
+    min-height:30px;
+    transform-origin:bottom;
+    background:linear-gradient(to top, var(--purple), var(--cyan));
+    border:1px solid var(--cyan-soft);
+    box-shadow:0 0 18px rgba(0,229,255,0.28);
+    animation:barBoot 0.7s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .cluster-column:nth-child(2) .bar{ animation-delay:0.1s; }
+  .cluster-column:nth-child(3) .bar{ animation-delay:0.2s; }
+  .cluster-column .label{
+    color:var(--text-dim);
+    font:10px var(--head-font);
+    letter-spacing:1px;
+    text-align:center;
+  }
+  @keyframes barBoot{ from{ transform:scaleY(0); opacity:0; } to{ transform:scaleY(1); opacity:1; } }
+  .project-modal-copy{
+    color:var(--text-dim);
+    line-height:1.55;
+    margin:16px 0;
+  }
+  .project-modal-actions{ display:flex; flex-wrap:wrap; gap:10px; }
+  body.modal-open{ overflow:hidden; }
+
+  @media (max-width:560px){
+    #experience .experience-track{ padding-left:27px; }
+    #experience .experience-track::before,
+    #experience .experience-track::after{ left:9px; }
+    #experience .experience-track .log::before{ left:-24px; }
+    #projects .project-track{ padding-left:27px; }
+    #projects .project-track::before,
+    #projects .project-track::after{ left:9px; }
+    #projects .project-log::before{ left:-24px; }
+    .project-preview-btn{ margin-left:0; margin-top:8px; }
+    .project-modal-box{ padding:18px 14px; }
+    .project-preview-screen{ min-height:260px; }
+    .project-preview-screen iframe{ height:360px; }
+    .cluster-preview{ min-height:260px; padding:36px 12px 24px; gap:8px; }
+    .cluster-column{ height:190px; }
+  }
 </style>
 </head>
 <body>
@@ -878,6 +1184,10 @@
 <div id="transitionFlash"></div>
 <div id="sysclock"><span class="lbl">LOCAL TIME //</span><span id="clockText">--:--:--</span></div>
 <div id="topRightHud">
+  <div id="langToggle">
+    <button data-lang="id" class="active">ID</button>
+    <button data-lang="en">EN</button>
+  </div>
   <div id="navMenu">
     <button id="navMenuBtn" aria-label="Menu navigasi" aria-expanded="false">⋯</button>
     <div id="navMenuPanel">
@@ -889,10 +1199,6 @@
       <a href="#certifications">Certification</a>
       <a href="#contact">Connect</a>
     </div>
-  </div>
-  <div id="langToggle">
-    <button data-lang="id" class="active">ID</button>
-    <button data-lang="en">EN</button>
   </div>
 </div>
 <button id="toTop" aria-label="Kembali ke atas">↑</button>
@@ -974,7 +1280,7 @@
 
   <section class="reveal" id="experience">
     <div class="section-title"><span class="idx">03</span> <span class="type-loop" data-text="EXPERIENCE"></span><span class="cursor-blink"></span></div>
-    <div class="panel">
+    <div class="panel experience-track">
       <div class="panel log tilt">
         <div class="row"><h3>Studi Independen Bersertifikat — Nurul Fikri Academy</h3><span class="meta">FEB–JUL 2025</span></div>
         <div class="sub i18n" data-id="Seasonal" data-en="Seasonal">Seasonal</div>
@@ -1026,35 +1332,26 @@
 
   <section class="reveal" id="projects">
     <div class="section-title"><span class="idx">05</span> <span class="type-loop" data-text="DEPLOYED PROJECTS"></span><span class="cursor-blink"></span></div>
-    <div class="panel">
-      <div class="carousel" id="projectCarousel">
-        <button class="carousel-nav prev ripple-host" aria-label="Sebelumnya">‹</button>
-        <button class="carousel-nav next ripple-host" aria-label="Berikutnya">›</button>
-        <div class="carousel-track">
-          <div class="slide">
-            <div class="panel proj tilt">
-              <span class="flag">BUILD_01</span>
-              <h3>Website UMKM "Dimsum Dapur Bunda"</h3>
-              <p class="i18n" data-id='Mengembangkan website responsif untuk UMKM "Dimsum Dapur Bunda" — mini project pengembangan web dari awal hingga siap pakai.' data-en='Developed a responsive website for the UMKM "Dimsum Dapur Bunda" — a mini project building a web app from scratch to production-ready.'>Mengembangkan website responsif untuk UMKM "Dimsum Dapur Bunda" — mini project pengembangan web dari awal hingga siap pakai.</p>
-              <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
-              <div style="margin-top:14px;">
-                <a class="btn magnetic ripple-host" style="font-size:10px; padding:11px 16px;" href="https://faizanalyst-id.github.io/dimsumdapurbunda/" target="_blank" rel="noopener"><span class="i18n" data-id="Lihat Project ↗" data-en="View Project ↗">Lihat Project ↗</span></a>
-              </div>
-            </div>
-          </div>
-          <div class="slide">
-            <div class="panel proj tilt">
-              <span class="flag">SKRIPSI</span>
-              <h3>Clustering Pola Penjualan (K-Means)</h3>
-              <p class="i18n" data-id="Clustering pola penjualan produk berbasis data transaksi menggunakan algoritma K-Means untuk mendukung perencanaan produksi, dievaluasi dengan Elbow Method dan Silhouette Score." data-en="Clustered product sales patterns based on transaction data using the K-Means algorithm to support production planning, evaluated with the Elbow Method and Silhouette Score.">Clustering pola penjualan produk berbasis data transaksi menggunakan algoritma K-Means untuk mendukung perencanaan produksi, dievaluasi dengan Elbow Method dan Silhouette Score.</p>
-              <span class="tag">Python</span><span class="tag">K-Means</span><span class="tag">Data Clustering</span>
-              <div style="margin-top:14px;">
-                <a class="btn magnetic ripple-host" style="font-size:10px; padding:11px 16px;" href="https://colab.research.google.com/drive/1yt1Isti4rDMxwPCF1Bb1UOp0RKAxeY3f?usp=sharing" target="_blank" rel="noopener"><span class="i18n" data-id="Lihat Project ↗" data-en="View Project ↗">Lihat Project ↗</span></a>
-              </div>
-            </div>
-          </div>
+    <div class="panel project-track">
+      <div class="panel proj project-log tilt">
+        <span class="flag">Freelance</span>
+        <h3>Website UMKM "Dimsum Dapur Bunda"</h3>
+        <p class="i18n" data-id='Mengembangkan website responsif untuk UMKM "Dimsum Dapur Bunda" — mini project pengembangan web dari awal hingga siap pakai.' data-en='Developed a responsive website for the UMKM "Dimsum Dapur Bunda" — a mini project building a web app from scratch to production-ready.'>Mengembangkan website responsif untuk UMKM "Dimsum Dapur Bunda" — mini project pengembangan web dari awal hingga siap pakai.</p>
+        <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+        <div style="margin-top:14px;">
+          <a class="btn magnetic ripple-host" style="font-size:10px; padding:11px 16px;" href="https://faizanalyst-id.github.io/dimsumdapurbunda/" target="_blank" rel="noopener"><span class="i18n" data-id="Lihat Project ↗" data-en="View Project ↗">Lihat Project ↗</span></a>
+          <button class="btn ghost magnetic ripple-host project-preview-btn" type="button" data-project-preview="website" data-project-title='Website UMKM "Dimsum Dapur Bunda"' data-project-url="https://faizanalyst-id.github.io/dimsumdapurbunda/" data-project-copy="Website responsif untuk UMKM Dimsum Dapur Bunda, dibuat dari awal menggunakan HTML, CSS, dan JavaScript.">Quick Preview</button>
         </div>
-        <div class="carousel-dots"></div>
+      </div>
+      <div class="panel proj project-log tilt">
+        <span class="flag">SKRIPSI</span>
+        <h3>Clustering Pola Penjualan (K-Means)</h3>
+        <p class="i18n" data-id="Clustering pola penjualan produk berbasis data transaksi menggunakan algoritma K-Means untuk mendukung perencanaan produksi, dievaluasi dengan Elbow Method dan Silhouette Score." data-en="Clustered product sales patterns based on transaction data using the K-Means algorithm to support production planning, evaluated with the Elbow Method and Silhouette Score.">Clustering pola penjualan produk berbasis data transaksi menggunakan algoritma K-Means untuk mendukung perencanaan produksi, dievaluasi dengan Elbow Method dan Silhouette Score.</p>
+        <span class="tag">Python</span><span class="tag">K-Means</span><span class="tag">Data Clustering</span>
+        <div style="margin-top:14px;">
+          <a class="btn magnetic ripple-host" style="font-size:10px; padding:11px 16px;" href="https://colab.research.google.com/drive/1yt1Isti4rDMxwPCF1Bb1UOp0RKAxeY3f?usp=sharing" target="_blank" rel="noopener"><span class="i18n" data-id="Lihat Project ↗" data-en="View Project ↗">Lihat Project ↗</span></a>
+          <button class="btn ghost magnetic ripple-host project-preview-btn" type="button" data-project-preview="cluster" data-project-title="Clustering Pola Penjualan (K-Means)" data-project-url="https://colab.research.google.com/drive/1yt1Isti4rDMxwPCF1Bb1UOp0RKAxeY3f?usp=sharing" data-project-copy="K-Means membentuk tiga kategori order produksi: Cluster 0 tinggi (1.343 data), Cluster 1 sedang (1.207 data), dan Cluster 2 rendah (12 data). Silhouette Score sebesar 0,6377 termasuk kategori baik (good structure).">Quick Preview</button>
+        </div>
       </div>
     </div>
   </section>
@@ -1097,6 +1394,21 @@
     <div class="modal-img-wrap" id="certModalImgWrap">
       <span class="placeholder-icon">🖼️</span>
       <span class="placeholder-txt">Gambar sertifikat akan segera ditambahkan</span>
+    </div>
+  </div>
+</div>
+
+<div id="projectModal" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle" aria-hidden="true">
+  <div class="project-modal-box">
+    <button class="modal-close" id="projectModalClose" type="button" aria-label="Tutup preview project">✕</button>
+    <div class="project-modal-head">
+      <div class="project-modal-kicker">// LIVE PROJECT PREVIEW</div>
+      <h3 id="projectModalTitle">Project Preview</h3>
+    </div>
+    <div class="project-preview-screen" id="projectPreviewScreen"></div>
+    <p class="project-modal-copy" id="projectModalCopy"></p>
+    <div class="project-modal-actions">
+      <a class="btn magnetic ripple-host" id="projectModalLink" href="#" target="_blank" rel="noopener">Buka Project Penuh ↗</a>
     </div>
   </div>
 </div>
@@ -1489,6 +1801,124 @@
   }
 })();
 
+/* ============ STAGGERED SKILL MODULES ============ */
+(function(){
+  var modules = document.querySelector('#skills .modules');
+  if(!modules) return;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduceMotion){ modules.classList.add('stagger-in'); return; }
+  modules.classList.add('stagger-ready');
+  if('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          modules.classList.add('stagger-in');
+          obs.disconnect();
+        }
+      });
+    }, { threshold:0.22 });
+    obs.observe(modules);
+  } else {
+    modules.classList.add('stagger-in');
+  }
+})();
+
+/* ============ STAGGERED CERTIFICATIONS ============ */
+(function(){
+  var list = document.querySelector('#certifications .cred-list');
+  if(!list) return;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduceMotion) return;
+  list.classList.add('cert-stagger-ready');
+  if('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          list.classList.add('cert-stagger-in');
+          obs.disconnect();
+        }
+      });
+    }, { threshold:0.16 });
+    obs.observe(list);
+  } else {
+    list.classList.add('cert-stagger-in');
+  }
+})();
+
+/* ============ SCROLL-DRAWN EXPERIENCE TIMELINE ============ */
+(function(){
+  var section = document.getElementById('experience');
+  if(!section) return;
+  var track = section.querySelector('.experience-track');
+  var logs = Array.prototype.slice.call(section.querySelectorAll('.log'));
+  if(!track || !logs.length) return;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ticking = false;
+
+  function update(){
+    if(reduceMotion){
+      track.style.setProperty('--timeline-progress', '100%');
+      logs.forEach(function(log){ log.classList.add('timeline-active'); });
+      ticking = false;
+      return;
+    }
+    var rect = track.getBoundingClientRect();
+    var viewport = window.innerHeight || document.documentElement.clientHeight;
+    var start = viewport * 0.76;
+    var end = viewport * 0.34;
+    var travel = Math.max(1, rect.height + start - end);
+    var progress = Math.max(0, Math.min(1, (start - rect.top) / travel));
+    track.style.setProperty('--timeline-progress', (progress * 100).toFixed(2) + '%');
+    logs.forEach(function(log){
+      log.classList.toggle('timeline-active', log.getBoundingClientRect().top < viewport * 0.68);
+    });
+    ticking = false;
+  }
+  function requestUpdate(){
+    if(!ticking){ requestAnimationFrame(update); ticking = true; }
+  }
+  window.addEventListener('scroll', requestUpdate, { passive:true });
+  window.addEventListener('resize', requestUpdate);
+  update();
+})();
+
+/* ============ SCROLL-DRAWN PROJECT TIMELINE ============ */
+(function(){
+  var section = document.getElementById('projects');
+  if(!section) return;
+  var track = section.querySelector('.project-track');
+  var cards = Array.prototype.slice.call(section.querySelectorAll('.project-log'));
+  if(!track || !cards.length) return;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ticking = false;
+
+  function update(){
+    if(reduceMotion){
+      track.style.setProperty('--project-progress', '100%');
+      cards.forEach(function(card){ card.classList.add('timeline-active'); });
+      ticking = false;
+      return;
+    }
+    var rect = track.getBoundingClientRect();
+    var viewport = window.innerHeight || document.documentElement.clientHeight;
+    var start = viewport * 0.76;
+    var end = viewport * 0.34;
+    var travel = Math.max(1, rect.height + start - end);
+    var progress = Math.max(0, Math.min(1, (start - rect.top) / travel));
+    track.style.setProperty('--project-progress', (progress * 100).toFixed(2) + '%');
+    cards.forEach(function(card){
+      card.classList.toggle('timeline-active', card.getBoundingClientRect().top < viewport * 0.68);
+    });
+    ticking = false;
+  }
+  function requestUpdate(){
+    if(!ticking){ requestAnimationFrame(update); ticking = true; }
+  }
+  window.addEventListener('scroll', requestUpdate, { passive:true });
+  window.addEventListener('resize', requestUpdate);
+  update();
+})();
+
 /* ============ TILT CARDS ============ */
 (function(){
   if(window.matchMedia('(hover: none)').matches) return;
@@ -1624,7 +2054,7 @@
   var msgTimer = setInterval(function(){
     i++;
     if(i < msgs.length){ statusEl.textContent = msgs[i]; }
-  }, 850);
+  }, 500);
 
   function powerOnHero(){
     var hero = document.querySelector('.hero');
@@ -1634,7 +2064,7 @@
   }
 
   var start = Date.now();
-  var minShow = 5000;
+  var minShow = 3000;
   function reveal(){
     var wait = Math.max(0, minShow - (Date.now() - start));
     setTimeout(function(){
@@ -1719,6 +2149,96 @@
   });
 
   goTo(0);
+})();
+
+/* ============ PROJECT QUICK PREVIEW ============ */
+(function(){
+  var modal = document.getElementById('projectModal');
+  var box = modal ? modal.querySelector('.project-modal-box') : null;
+  var closeBtn = document.getElementById('projectModalClose');
+  var title = document.getElementById('projectModalTitle');
+  var copy = document.getElementById('projectModalCopy');
+  var screen = document.getElementById('projectPreviewScreen');
+  var link = document.getElementById('projectModalLink');
+  var triggers = document.querySelectorAll('.project-preview-btn');
+  var lastTrigger = null;
+  if(!modal || !box || !closeBtn || !title || !copy || !screen || !link) return;
+
+  function buildWebsitePreview(url, projectTitle){
+    screen.innerHTML = '';
+    var frame = document.createElement('iframe');
+    frame.src = url;
+    frame.title = 'Preview ' + projectTitle;
+    frame.loading = 'lazy';
+    frame.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-popups');
+    screen.appendChild(frame);
+  }
+
+  function buildClusterPreview(){
+    screen.innerHTML =
+      '<div class="cluster-preview" aria-label="Jumlah anggota tiga cluster">' +
+        '<div class="cluster-score">SILHOUETTE 0,6377 // GOOD STRUCTURE</div>' +
+        '<div class="cluster-column"><span class="value">1.343 DATA</span><span class="bar" style="--bar-height:96%"></span><span class="label">CLUSTER 0<br>TINGGI</span></div>' +
+        '<div class="cluster-column"><span class="value">1.207 DATA</span><span class="bar" style="--bar-height:86%"></span><span class="label">CLUSTER 1<br>SEDANG</span></div>' +
+        '<div class="cluster-column"><span class="value">12 DATA</span><span class="bar" style="--bar-height:5%"></span><span class="label">CLUSTER 2<br>RENDAH</span></div>' +
+      '</div>';
+  }
+
+  function open(trigger){
+    lastTrigger = trigger;
+    var kind = trigger.getAttribute('data-project-preview');
+    var projectTitle = trigger.getAttribute('data-project-title') || 'Project Preview';
+    var url = trigger.getAttribute('data-project-url') || '#';
+    title.textContent = projectTitle;
+    copy.textContent = trigger.getAttribute('data-project-copy') || '';
+    link.href = url;
+    if(kind === 'website') buildWebsitePreview(url, projectTitle);
+    else buildClusterPreview();
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    box.classList.remove('animate-in');
+    void box.offsetWidth;
+    box.classList.add('animate-in');
+    closeBtn.focus();
+  }
+
+  function close(){
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    screen.innerHTML = '';
+    if(lastTrigger) lastTrigger.focus();
+  }
+
+  triggers.forEach(function(trigger){
+    trigger.addEventListener('click', function(){ open(trigger); });
+  });
+  closeBtn.addEventListener('click', close);
+  modal.addEventListener('click', function(e){ if(e.target === modal) close(); });
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && modal.classList.contains('show')) close();
+  });
+})();
+
+/* ============ ACTIVE SECTION HUD ============ */
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('#navMenuPanel a[href^="#"]'));
+  if(!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(link){ byId[link.getAttribute('href').slice(1)] = link; });
+  function activate(id){
+    links.forEach(function(link){
+      var active = link === byId[id];
+      link.classList.toggle('active', active);
+      if(active) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  }
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){ if(entry.isIntersecting) activate(entry.target.id); });
+  }, { rootMargin:'-32% 0px -58% 0px', threshold:0 });
+  document.querySelectorAll('section[id]').forEach(function(section){ obs.observe(section); });
 })();
 
 /* ============ SECTION TOAST ============ */
